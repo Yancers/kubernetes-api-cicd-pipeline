@@ -26,8 +26,8 @@ jobs: # clones code repo --> logs into container reg --> builds docker image
           tags: | # adds two tags - 1. names latest 2. unique hash added to the newly created image 
             ghcr.io/${{ github.repository }}:latest  
             ghcr.io/${{ github.repository }}:${{ github.sha }}
-      - name: Update GitOps repository
-        shell: bash
+      - name: Update GitOps repository 
+        shell: bash # instead of using github actions, we can run a few commands to edit the gitops repository 
         env:
           GIT_TOKEN: ${{ secrets.GITOPS_PAT }} # access token that gives it permission to edit the deployment.yaml on the gitops repository 
         run: |
@@ -35,11 +35,11 @@ jobs: # clones code repo --> logs into container reg --> builds docker image
           git config --global credential.helper store
           echo "https://${GIT_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
           
-          # Remove any existing gitops directory
+          # Remove any existing gitops directory 
           rm -rf gitops
           
           # Clone repository using HTTPS URL without token
-          git clone https://github.com/rslim087a/grade-api-gitops.git gitops
+          git clone https://github.com/Yancers/kubernetes-gitops.git gitops
           cd gitops
           
           if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -55,4 +55,4 @@ jobs: # clones code repo --> logs into container reg --> builds docker image
           git commit -m "Update image to ${{ github.sha }}"
           
           # Push
-          git push -f https://${GIT_TOKEN}@github.com/rslim087a/grade-api-gitops.git main
+          git push -f https://${GIT_TOKEN}@github.com/Yancers/kubernetes-gitops.git main
