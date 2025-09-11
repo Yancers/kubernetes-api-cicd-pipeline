@@ -39,7 +39,7 @@ jobs: # clones code repo --> logs into container reg --> builds docker image
           rm -rf gitops
           
           # Clone repository using HTTPS URL without token
-          git clone https://github.com/Yancers/kubernetes-gitops.git gitops
+          git clone https://github.com/yancers/kubernetes-gitops.git gitops
           cd gitops
           
           if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -55,4 +55,4 @@ jobs: # clones code repo --> logs into container reg --> builds docker image
           git commit -m "Update image to ${{ github.sha }}"
           
           # Push
-          git push -f https://${GIT_TOKEN}@github.com/Yancers/kubernetes-gitops.git main
+          git push -f https://${GIT_TOKEN}@github.com/yancers/kubernetes-gitops.git main
